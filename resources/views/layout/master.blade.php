@@ -13,7 +13,7 @@
 <body>
     @include('layout.header')
     {{-- @include('layout.sidebar') --}}
-    <x-nav />>
+    <x-nav />
     @yield('content')
     @section('breadcrumb')
         @include('layout.footer')

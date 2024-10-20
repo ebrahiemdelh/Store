@@ -17,7 +17,7 @@ Route::group([
     })->name('dashboard'); // 'verified' if for email verification
 
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // ==================================================
     Route::get('categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');

@@ -12,6 +12,20 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = [
+        'store_id',
+        'category_id',
+        'name',
+        'slug',
+        'description',
+        'image',
+        'price',
+        'compare_price',
+        'options',
+        'rating',
+        'featured',
+        'status',
+    ];
 
     public function category()
     {
@@ -22,6 +36,17 @@ class Product extends Model
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class, //related model, is enought to write the name of the class unless the class is in a different namespace
+            'product_tag', // pivot table
+            'product_id', // foreign key
+            'tag_id', // related key
+            'id', // local key
+            'id' // related key
+        );
+    }
     protected function scopeFilter(Builder $builder, $filter)
     {
         if ($filter['name'] ?? null) {

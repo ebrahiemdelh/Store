@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Locales;
+
 
 class ProfileController extends Controller
 {
     public function edit()
     {
         $user = Auth::user();
-        return view('dashboard.profile.edit', compact('user'));
+        $countries = Countries::getCountryCodes();
+        $locales=Locales::getNames();
+        // dd($countries);
+        return view('dashboard.profile.edit', compact('user', 'countries', 'locales'));
     }
     public function update(Request $request)
     {
@@ -25,7 +31,7 @@ class ProfileController extends Controller
         ]);
         $user = $request->user();
         $user->profile->fill($request->all())->save();
-        return redirect()->route('dashboard.profile.edit')->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully');
         // $profile = $user->profile;
         // if ($profile->user_id) {
         //     $user->profile->update($request->all());

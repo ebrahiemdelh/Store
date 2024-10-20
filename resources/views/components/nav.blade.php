@@ -27,12 +27,10 @@
                                 alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                            <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
                         </div>
                     </div>
                     <div class="buttons d-flex justify-content-around mb-5">
-                        <a href="{{ route('profile.edit') }}"
-                            class="btn btn-sm btn-outline-primary text-white-40">Profile</a>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>

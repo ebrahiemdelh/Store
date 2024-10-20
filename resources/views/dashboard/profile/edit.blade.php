@@ -16,6 +16,7 @@
                             </ul>
                         </div>
                     @endif
+                    <x-alert type="success"/>
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Edit Profile</h3>
@@ -65,8 +66,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="country">Country</label>
-                                    <x-form.input type='text' name='country' placeholder='Enter Country Name'
-                                        value='{{ $user->profile->country }}' />
+                                    <select name="country">
+                                        <option value="" selected disabled>Select Country</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country }}" @selected($country == $user->profile->country)>
+                                                {{ $country }}
+                                            </option>
+                                            @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -80,5 +87,4 @@
             </div>
         </div>
     </section>
-
 @endsection
