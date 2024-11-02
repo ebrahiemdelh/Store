@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -62,9 +63,33 @@ class Product extends Model
             $builder->where('products.status', $filter['status']);
         }
     }
+    public function scopeActive(Builder $builder)
+    {
+        return $builder->where('status', "active");
+    }
     protected static function booted()
     {
         static::addGlobalScope('store', new StoreScope()); // better for avoiding errors
         // static::addGlobalScope(StoreScope::class);
+    }
+    // Accessors
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return   asset('assets/images/products/default.jpeg');
+        } else if (Str::startsWith($this->image, ['http', 'https'])) {
+            return $this->image;
+        }
+        return asset('assets/images/products/' . $this->image);
+    }
+    public function getDiscountAttribute()
+    {
+        if ($this->compare_price) {
+            return round((($this->compare_price - $this->price) / $this->compare_price) * 100);
+        }
+    }
+    public function getNewAttribute()
+    {
+        return now()->subDays(30)->lt($this->created_at);
     }
 }

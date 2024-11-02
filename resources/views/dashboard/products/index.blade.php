@@ -1,7 +1,7 @@
 @extends('layout.master')
-@if (Route::currentRouteName() == 'products.trash')
+@if (Route::currentRouteName() == 'dashboard.products.trash')
     @section('title', 'Trash Products')
-@elseif (Route::currentRouteName() == 'products.index')
+@elseif (Route::currentRouteName() == 'dashboard.products.index')
     @section('title', 'Products')
 @endif('title', 'Products')
 @section('content')
@@ -16,11 +16,13 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            @if (Route::currentRouteName() == 'products.index')
-                                <li class="breadcrumb-item active"><a href="{{ route('products.trash') }}">Trash Products</a>
+                            @if (Route::currentRouteName() == 'dashboard.products.index')
+                                <li class="breadcrumb-item active"><a href="{{ route('dashboard.products.trash') }}">Trash
+                                        Products</a>
                                 </li>
-                            @elseif (Route::currentRouteName() == 'products.trash')
-                                <li class="breadcrumb-item active"><a href="{{ route('products.index') }}">Products</a></li>
+                            @elseif (Route::currentRouteName() == 'dashboard.products.trash')
+                                <li class="breadcrumb-item active"><a
+                                        href="{{ route('dashboard.products.index') }}">Products</a></li>
                             @endif
                         </ol>
                     </div>
@@ -56,7 +58,7 @@
                                 <h3 class="card-title">Responsive Hover Table</h3>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <a class="btn btn-sm btn-primary" href="{{ route('products.create') }}">
+                                        <a class="btn btn-sm btn-primary" href="{{ route('dashboard.products.create') }}">
                                             Add Product
                                         </a>
                                     </div>
@@ -71,9 +73,9 @@
                                             <th>Product Name</th>
                                             <th>Store Name</th>
                                             <th>Category Name</th>
-                                            @if (Route::currentRouteName() == 'products.index')
+                                            @if (Route::currentRouteName() == 'dashboard.products.index')
                                                 <th>Created At</th>
-                                            @elseif(Route::currentRouteName() == 'products.trash')
+                                            @elseif(Route::currentRouteName() == 'dashboard.products.trash')
                                                 <th>Deleted At</th>
                                             @endif
                                             <th>Status</th>
@@ -87,17 +89,17 @@
                                                 <td>{{ $product->name }}</td>
                                                 <td>{{ $product->store->name ?? '' }}</td>
                                                 <td>{{ $product->category->name ?? '' }}</td>
-                                                @if (Route::currentRouteName() == 'products.index')
+                                                @if (Route::currentRouteName() == 'dashboard.products.index')
                                                     <td>{{ $product->created_at }}</td>
-                                                @elseif(Route::currentRouteName() == 'products.trash')
+                                                @elseif(Route::currentRouteName() == 'dashboard.products.trash')
                                                     <td>{{ $product->deleted_at }}</td>
                                                 @endif
                                                 <td>{{ $product->status }}</td>
                                                 <td class="d-flex justify-content-around">
-                                                    <a href="{{ route('products.edit', $product->id) }}"
+                                                    <a href="{{ route('dashboard.products.edit', $product->id) }}"
                                                         class="btn btn-sm btn-outline-success">Edit</a>
-                                                    @if (Route::currentRouteName() == 'products.index')
-                                                        <form action="{{ route('products.destroy', $product->id) }}"
+                                                    @if (Route::currentRouteName() == 'dashboard.products.index')
+                                                        <form action="{{ route('dashboard.products.destroy', $product->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -105,13 +107,13 @@
                                                                 class="btn btn-sm btn-outline-danger">Delete</button>
                                                         </form>
                                                     @elseif (Route::currentRouteName() == 'product.trash')
-                                                        <form action="{{ route('products.restore', $product->id) }}"
+                                                        <form action="{{ route('dashboard.products.restore', $product->id) }}"
                                                             method="post">
                                                             @csrf @method('put')
                                                             <button type="submit"
                                                                 class="btn btn-sm btm-outline-primary">Restore</button>
                                                         </form>
-                                                        <form action="{{ route('products.force-delete', $product->id) }}"
+                                                        <form action="{{ route('dashboard.products.force-delete', $product->id) }}"
                                                             method="post">
                                                             @csrf @method('delete')
                                                             <button type="submit"

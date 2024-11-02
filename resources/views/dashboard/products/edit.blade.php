@@ -22,7 +22,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('products.update', $product->id) }}" method="post"
+                        <form action="{{ route('dashboard.products.update', $product->id) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')

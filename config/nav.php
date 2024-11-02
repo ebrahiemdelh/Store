@@ -8,14 +8,14 @@ return [
     ],
     [
         'icon' => 'nav-icon fas fa-th',
-        'route' => 'categories.index',
+        'route' => 'dashboard.categories.index',
         'title' => 'Categories',
         'badge' => 'New',
         'color' => 'danger'
     ],
     [
         'icon' => 'nav-icon fas fa-barcode',
-        'route' => 'products.index',
+        'route' => 'dashboard.products.index',
         'title' => 'Products',
         'badge'=>'updated',
         'color'=>'success'

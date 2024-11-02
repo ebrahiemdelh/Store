@@ -22,7 +22,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('products.store') }}" method="post">
+                        <form action="{{ route('dashboard.products.store') }}" method="post">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">

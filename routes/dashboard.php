@@ -3,21 +3,21 @@
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
-use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\ProfileController as DashProfileController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group([
     'middleware' => 'auth',
     'prefix' => 'dashboard',
-    // 'as' => 'dashboard'  //used to make the name used in route dashboard.category.create for example
+    'as' => 'dashboard.'  //used to make the name used in route dashboard.category.create for example
 ], function () {
     Route::get('/', function () {
         return view('welcome');
-    })->name('dashboard'); // 'verified' if for email verification
+    })->name('home'); // 'verified' if for email verification
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/edit', [DashProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [DashProfileController::class, 'update'])->name('profile.update');
 
     // ==================================================
     Route::get('categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');
