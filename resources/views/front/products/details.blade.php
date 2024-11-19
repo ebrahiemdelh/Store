@@ -1,5 +1,4 @@
-<x-front-layout>
-    <x-slot:title>{{ $product->name }}</x-slot:title>
+<x-front-layout :title="$product->name">
     <x-slot:breadcrumbs>
         <div class="breadcrumbs">
             <div class="container">

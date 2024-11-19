@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Category;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -22,6 +23,7 @@ class FrontLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layout.front');
+        $categories=Category::filter("active")->get();
+        return view('layout.front',compact('categories'));
     }
 }

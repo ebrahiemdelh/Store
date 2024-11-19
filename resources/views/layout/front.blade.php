@@ -64,7 +64,7 @@
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-middle">
                             <ul class="useful-links">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{route("home")}}">Home</a></li>
                                 <li><a href="about-us.html">About Us</a></li>
                                 <li><a href="contact.html">Contact Us</a></li>
                             </ul>
@@ -72,18 +72,25 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
+                            @if(Auth::check())
+                            <a class="user" href="{{route("dashboard.home")}}">
+                                <i class="lni lni-user"></i>
+                                {{ Auth::user()->name }}
+                            </a>
+                            @else
                             <div class="user">
                                 <i class="lni lni-user"></i>
                                 Hello
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="login.html">Sign In</a>
+                                    <a href="{{route('login')}}">Sign In</a>
                                 </li>
                                 <li>
-                                    <a href="register.html">Register</a>
+                                    <a href="{{route('register')}}">Register</a>
                                 </li>
                             </ul>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -134,7 +141,7 @@
                             <div class="nav-hotline">
                                 <i class="lni lni-phone"></i>
                                 <h3>Hotline:
-                                    <span>(+100) 123 456 7890</span>
+                                    <span>(+20) 106 285 9646</span>
                                 </h3>
                             </div>
                             <div class="navbar-cart">
@@ -212,7 +219,10 @@
                         <div class="mega-category-menu">
                             <span class="cat-button"><i class="lni lni-menu"></i>All Categories</span>
                             <ul class="sub-category">
-                                <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
+                                @foreach($categories as $category)
+                                <li><a href="product-grids.html">{{$category->name}}</a></li>
+                                @endforeach
+                                {{-- <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
                                     <ul class="inner-sub-category">
                                         <li><a href="product-grids.html">Digital Cameras</a></li>
                                         <li><a href="product-grids.html">Camcorders</a></li>
@@ -236,7 +246,7 @@
                                 <li><a href="product-grids.html">Home Audio & Theater</a></li>
                                 <li><a href="product-grids.html">Computers & Tablets </a></li>
                                 <li><a href="product-grids.html">Video Games </a></li>
-                                <li><a href="product-grids.html">Home Appliances </a></li>
+                                <li><a href="product-grids.html">Home Appliances </a></li> --}}
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
@@ -262,10 +272,10 @@
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item"><a href="about-us.html">About Us</a></li>
                                             <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item"><a href="login.html">Login</a></li>
-                                            <li class="nav-item"><a href="register.html">Register</a></li>
+                                            <li class="nav-item"><a href="{{route('login')}}">Login</a></li>
+                                            <li class="nav-item"><a href="{{route('register')}}">Register</a></li>
                                             <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
-                                            <li class="nav-item"><a href="404.html">404 Error</a></li>
+                                            <li class="nav-item"><a href="#">404 Error</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">

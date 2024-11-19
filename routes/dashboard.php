@@ -12,9 +12,7 @@ Route::group([
     'prefix' => 'dashboard',
     'as' => 'dashboard.'  //used to make the name used in route dashboard.category.create for example
 ], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('home'); // 'verified' if for email verification
+    Route::get('/', [DashboardController::class, 'index'])->name('home'); // 'verified' if for email verification
 
     Route::get('/profile/edit', [DashProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [DashProfileController::class, 'update'])->name('profile.update');

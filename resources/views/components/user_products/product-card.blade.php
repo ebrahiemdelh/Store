@@ -10,7 +10,7 @@
                 <span class="new-tag">New</span>
             @endif
             <div class="button">
-                <a href="{{ route('front.products.show', $product->id) }}"method='post' class="btn"><i
+                <a href="{{ route('front.products.show', $product->slug) }}"method='post' class="btn"><i
                         class="lni lni-cart"></i> Add to
                     Cart</a>
             </div>
