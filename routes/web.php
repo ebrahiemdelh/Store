@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::get("/products", [FrontProductsController::class, 'index'])->name('front.products.index');
 Route::get("/products/{product:slug}", [FrontProductsController::class, 'show'])->name('front.products.show');
+Route::get("/products/show-grids", [FrontProductsController::class, 'showgrids'])->name('front.products.showgrids');
 
 require __DIR__ . '/dashboard.php';
 require __DIR__ . '/auth.php';

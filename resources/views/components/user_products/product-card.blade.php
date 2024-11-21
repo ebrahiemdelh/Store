@@ -18,7 +18,7 @@
         <div class="product-info">
             <span class="category">{{ $product->category->name }}</span>
             <h4 class="title">
-                <a href="{{ route('front.products.show', $product->id) }}">{{ $product->name }}</a>
+                <a href="{{ route('front.products.show', $product->slug) }}">{{ $product->name }}</a>
             </h4>
             <ul class="review">
                 @foreach (range(1, 5) as $i)

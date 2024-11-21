@@ -20,4 +20,10 @@ class ProductController extends Controller
         }
         return view('front.products.details', compact('product'));
     }
+    public function showgrids()
+    {
+        dd("showgrids");
+        $products = Product::active()->take(8)->get();
+        return view('front.products.grids', compact('products'));
+    }
 }
