@@ -2,7 +2,10 @@
     <div class="single-product">
         <div class="product-image">
             {{-- <img src="{{ asset('assets/images/products/product-1.jpg') }}" alt="#"> --}}
-            <img src="{{ $product->image_url }}" alt="#">
+            <img src="{{ $product->image_url }}"
+                {{-- onerror="this.onerror=null; this.src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
+                {{-- onerror="this.src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
+                onerror="src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#">
             @if ($product->discount)
                 <span class="sale-tag">-{{ $product->discount }}%</span>
             @endif

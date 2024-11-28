@@ -22,8 +22,7 @@ class ProductController extends Controller
     }
     public function showgrids()
     {
-        dd("showgrids");
-        $products = Product::active()->take(8)->get();
+        $products = Product::active()->paginate(12);
         return view('front.products.grids', compact('products'));
     }
 }
