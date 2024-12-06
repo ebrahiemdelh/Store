@@ -16,14 +16,14 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::with('parent')
-        ->withCount([
-            'products' => function($query) {
-                $query->where('status', 'active');
-            }
+            ->withCount([
+                'products' => function ($query) {
+                    $query->where('status', 'active');
+                }
             ]) //has error in counting products
-        // ->select('categories.*') // at more than one selection we use [] or use addSelect()
-        // ->selectRaw('(SELECT COUNT(*) FROM PRODUCTS WHERE status = "active" AND category_id = categories.id) as products_count')// selectRaw can be used more than one time
-        // select(DB::raw('(SELECT COUNT(*) FROM PRODUCTS WHERE category_id = categories.id) as products_count'))->
+            // ->select('categories.*') // at more than one selection we use [] or use addSelect()
+            // ->selectRaw('(SELECT COUNT(*) FROM PRODUCTS WHERE status = "active" AND category_id = categories.id) as products_count')// selectRaw can be used more than one time
+            // select(DB::raw('(SELECT COUNT(*) FROM PRODUCTS WHERE category_id = categories.id) as products_count'))->
             /*leftJoin('categories as parent', 'parent.id', '=', 'categories.parent_id')->select(['categories.*','parent.name as parent_name'])->*/
             ->filter($request->query())
             ->paginate();
@@ -60,7 +60,7 @@ class CategoryController extends Controller
         // dd($request['image']);
         $request->merge(['slug' => Str::slug($request->post('name'))]);
         $category = Category::create($request->all());
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -68,7 +68,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('dashboard.categories.show',compact('category'));
+        return view('dashboard.categories.show', compact('category'));
     }
 
     /**
@@ -87,6 +87,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'name' => 'required|string| unique:categories| not_in:admin,administrator',
+            'parent_id' => 'int| exists:categories,id',
+            'image' => 'mimes:png,jpg,jpeg| max:1048576| ', //dimensions:max_width=100,max_height=200',
+            'status' => 'in:active,archived',
+        ]);
         $category = Category::find($id);
         $oldImage = $category->image;
         if ($request->hasFile('image')) {

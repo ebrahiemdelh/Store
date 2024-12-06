@@ -22,30 +22,14 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('categories.update', $category->id) }}" method="post"
+                        <form action="{{ route('dashboard.categories.update', $category->id) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name">Category Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{ $category->name }}"
-                                        placeholder="Enter Category Name">
-                                </div>
-                                <div class="form-group form-select">
-                                    <label for="parent_id">Parent Category</label>
-                                    <select class="form-control" id="parent" name="parent_id">
-                                        <option value="">Select Parent Category</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}" @selected($category->parent_id == $parent->id)>
-                                                {{ $parent->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" name="description">{{ $category->description }}</textarea>
-                                </div>
+                            <div class="p-4">
+                                <x-form.input element="Category" name="name" :value="$category->name" />
+                                <x-form.select element="Parent" name="parent_id" :value="$parents" />
+                                <x-form.textarea :data="$category->description" />
                                 <div class="form-group">
                                     <label for="image">Image</label>
                                     <div class="input-group">
@@ -72,16 +56,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
-
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
-                    <!-- /.card -->
                 </div>
+                <!-- /.card -->
             </div>
+        </div>
         </div>
     </section>
 

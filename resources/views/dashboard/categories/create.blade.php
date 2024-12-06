@@ -22,27 +22,13 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('dashboard.categories.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name">Category Name</label>
-                                    <x-form.input type='text' name='name' value="{{$category->name ?? ''}}"/>
-                                </div>
-                                <div class="form-group form-select">
-                                    <label for="parent_id">Parent Category</label>
-                                    <select @class(['form-control', 'is-invalid' => $errors->has('parent_id')]) id="parent" name="parent_id">
-                                        <option value="" selected disabled>Select Parent Category</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}" @selected(old('parent_id') == $parent->id)>
-                                                {{ $parent->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" name="description" placeholder="Description">{{ old('description') }}</textarea>
-                                </div>
+                                <x-form.input element="Category" type='text' name='name'
+                                    value="{{ $category->name ?? '' }}" />
+                                <x-form.select element="Parent" name='parent_id' :value="$parents" />
+                                <x-form.textarea />
                                 <div class="form-group">
                                     <label for="image">Image</label>
                                     <div class="input-group">

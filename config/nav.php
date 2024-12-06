@@ -3,7 +3,7 @@ return [
     [
         'icon' => 'nav-icon fas fa-house-user',
 
-        'route' => 'dashboard',
+        'route' => 'dashboard.home',
         'title' => 'Home',
     ],
     [

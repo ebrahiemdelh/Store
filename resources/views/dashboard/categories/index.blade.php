@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('title', 'Categories')
-@if (Route::currentRouteName() == 'categories.trash')
+@if (Route::currentRouteName() == 'dashboard.categories.trash')
     @section('title', 'Trash Categories')
 @endif
 @section('content')
@@ -15,12 +15,13 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            @if (Route::currentRouteName() == 'categories.trash')
-                                <li class="breadcrumb-item active"><a href="{{ route('categories.index') }}">Categories</a>
+                            @if (Route::currentRouteName() == 'dashboard.categories.trash')
+                                <li class="breadcrumb-item active"><a
+                                        href="{{ route('dashboard.categories.index') }}">Categories</a>
                                 </li>
                             @endif
-                            @if (Route::currentRouteName() == 'categories.index')
-                                <li class="breadcrumb-item active"><a href="{{ route('categories.trash') }}">Trash
+                            @if (Route::currentRouteName() == 'dashboard.categories.index')
+                                <li class="breadcrumb-item active"><a href="{{ route('dashboard.categories.trash') }}">Trash
                                         Categories</a></li>
                             @endif
                         </ol>
@@ -39,8 +40,8 @@
                         <div class="card">
                             <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between my-4">
                                 @csrf
-                                <x-form.input name="name" placeholder="Search" class="mx-4"
-                                    value="{{ request('name') }}" />
+                                <input type="text" name="name" placeholder="Search" class="mx-4"
+                                    value="{{ request('name') }}">
                                 <select name="status" class="form-control mx-4">
                                     <option value="" selected>All</option>
                                     <option value="active"@selected(request('status') == 'active')>Active</option>
@@ -50,11 +51,30 @@
                             </form>
                             <div class="card-header">
                                 <h3 class="card-title">Responsive Hover Table</h3>
-                                @if (Route::currentRouteName() == 'categories.index')
+                                @if (Route::currentRouteName() == 'dashboard.categories.index')
                                     <div class="card-tools mx-2">
                                         <div class="input-group input-group-sm" style="width: 150px;">
-                                            <a class="btn btn-sm btn-primary" href="{{ route('categories.create') }}">
+                                            <a class="btn btn-sm btn-primary"
+                                                href="{{ route('dashboard.categories.create') }}">
                                                 Add Category
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-tools mx-2">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <a class="btn btn-sm btn-primary"
+                                                href="{{ route('dashboard.categories.trash') }}">
+                                                Trash Categories
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if (Route::currentRouteName() == 'dashboard.categories.trash')
+                                    <div class="card-tools mx-2">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <a class="btn btn-sm btn-primary"
+                                                href="{{ route('dashboard.categories.index') }}">
+                                                Categories
                                             </a>
                                         </div>
                                     </div>
@@ -70,7 +90,7 @@
                                             <th>Parent</th>
                                             <th>Name</th>
                                             <th>No. Active Products</th>
-                                            @if (Route::currentRouteName() == 'categories.trash')
+                                            @if (Route::currentRouteName() == 'dashboard.categories.trash')
                                             <th>Deleted At</th>@else<th>Created At</th>
                                             @endif
                                             <th>Status</th>
@@ -83,19 +103,22 @@
                                                 <td><img src="{{ $category->image }}" style="width:100px"></td>
                                                 <td>{{ $category->id }}</td>
                                                 <td>{{ $category->parent->name }}</td>
-                                                <td><a href="{{ route('categories.show', $category->id) }}">{{ $category->name }}</a></td>
+                                                <td><a
+                                                        href="{{ route('dashboard.categories.show', $category->id) }}">{{ $category->name }}</a>
+                                                </td>
                                                 <td>{{ $category->products_count }}</td>
-                                                @if (Route::currentRouteName() == 'categories.trash')
+                                                @if (Route::currentRouteName() == 'dashboard.categories.trash')
                                                 <td>{{ $category->deleted_at }}</td>@else<td>
                                                         {{ $category->created_at }}</td>
                                                 @endif
                                                 <td>{{ $category->status }}</td>
                                                 {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                                                 <td class="d-flex justify-content-around">
-                                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                                    <a href="{{ route('dashboard.categories.edit', $category->id) }}"
                                                         class="btn btn-sm btn-outline-success">Edit</a>
                                                     @if ($category->deleted_at != null)
-                                                        <form action="{{ route('categories.restore', $category->id) }}"
+                                                        <form
+                                                            action="{{ route('dashboard.categories.restore', $category->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
@@ -103,7 +126,7 @@
                                                                 class="btn btn-sm btn-outline-primary">Restore</button>
                                                         </form>
                                                         <form
-                                                            action="{{ route('categories.force-delete', $category->id) }}"
+                                                            action="{{ route('dashboard.categories.force-delete', $category->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -113,7 +136,8 @@
                                                         </form>
                                                         </form>
                                                     @else
-                                                        <form action="{{ route('categories.destroy', $category->id) }}"
+                                                        <form
+                                                            action="{{ route('dashboard.categories.destroy', $category->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

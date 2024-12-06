@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         // $categories=Category::filter("active")->get();
         $products=Product::with("category")->active()
-        ->latest()
+        // ->latest()
         ->take(8) // or limit(8)
         ->get();
         return view('front.home',compact('products'));

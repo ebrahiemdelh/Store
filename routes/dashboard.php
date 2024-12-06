@@ -4,11 +4,12 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProfileController as DashProfileController;
+use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-    'middleware' => 'auth',
+    'middleware' => ['auth',"auth.type:admin,super-admin"],
     'prefix' => 'dashboard',
     'as' => 'dashboard.'  //used to make the name used in route dashboard.category.create for example
 ], function () {

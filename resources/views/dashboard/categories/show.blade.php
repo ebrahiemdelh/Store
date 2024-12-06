@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Categories</a>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.categories.index') }}">Categories</a>
                             <li class="breadcrumb-item active"><a href="#">{{ $category->name }}</a></li>
                             </li>
                         </ol>

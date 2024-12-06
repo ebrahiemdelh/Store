@@ -1,11 +1,11 @@
     <!-- Start Single Product -->
     <div class="single-product">
         <div class="product-image">
-            {{-- <img src="{{ asset('assets/images/products/product-1.jpg') }}" alt="#"> --}}
-            <img src="{{ $product->image_url }}"
-                {{-- onerror="this.onerror=null; this.src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
-                {{-- onerror="this.src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
-                onerror="src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#">
+            <img src="{{ asset('assets/images/products/default.jpeg') }}">
+            {{-- <img src="{{ $product->image_url }}"
+                onerror="this.onerror=null; this.src='{{ asset('assets/images/products/default.jpeg') }}';"> --}}
+            {{-- onerror="this.src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
+            {{-- onerror="src='{{ asset('assets/images/products/default.jpeg') }}';" alt="#"> --}}
             @if ($product->discount)
                 <span class="sale-tag">-{{ $product->discount }}%</span>
             @endif
@@ -34,9 +34,9 @@
                 <li><span>4.0 Review(s)</span></li>
             </ul>
             <div class="price">
-                <span>${{ $product->price }}</span>
+                <span>{{ Currency::format($product->price, 'eur') }}</span>
                 @if ($product->compare_price)
-                    <span class="discount-price">${{ $product->compare_price }}</span>
+                    <span class="discount-price">{{ Currency::format($product->compare_price, 'eur') }}</span>
                 @endif
             </div>
         </div>

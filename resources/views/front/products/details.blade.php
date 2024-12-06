@@ -11,7 +11,7 @@
                     <div class="col-lg-6 col-md-6 col-12">
                         <ul class="breadcrumb-nav">
                             <li><a href="{{ route('home') }}"><i class="lni lni-home"></i> Home</a></li>
-                            <li><a href="{{ route('home') }}">Shop</a></li>
+                            <li><a href="{{ route('front.products.showgrids') }}">Shop</a></li>
                             <li>{{ $product->name }}</li>
                         </ul>
                     </div>
@@ -53,14 +53,12 @@
                                 {{-- :<a href="javascript:void(0)">Action
                                     cameras</a> --}}
                             </p>
-                            <h3 class="price">${{ $product->price }}
+                            <h3 class="price">{{ Currency::format($product->price) }}
                                 @if ($product->compare_price)
-                                    <span>${{ $product->compare_price }}</span>
+                                    <span>{{ Currency::format($product->compare_price) }}</span>
                                 @endif
                             </h3>
-                            <p class="info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt
-                                ut labore et dolore magna aliqua.</p>
+                            <p class="info-text">{{$product->description}}</p>
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
