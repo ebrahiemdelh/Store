@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  */
 class CategoryFactory extends Factory
 {
-    protected $model=Category::class;
+    protected $model = Category::class;
     /**
      * Define the model's default state.
      *
@@ -21,15 +21,15 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name=$this->faker->unique()->words(2,true);
+        $name = $this->faker->unique()->words(2, true);
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'description'=>$this->faker->sentence(15),
-            'image'=>$this->faker->imageUrl(),
+            'description' => $this->faker->sentence(15),
+            'image' => $this->faker->imageUrl(),
             // 'parent_id' => Category::inRandomOrder()->first()->id,
             'parent_id' => null,
-            'status' => $this->faker->randomElement(['active','archived']),
+            'status' => $this->faker->randomElement(['active', 'archived']),
         ];
     }
 }

@@ -48,7 +48,7 @@ test('password can be reset with valid token', function () {
             'token' => $notification->token,
             'email' => $user->email,
             'password' => 'password',
-            'password_confirmation' => 'password',
+            'password-confirm' => 'password',
         ]);
 
         $response

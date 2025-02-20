@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController as FrontProductsController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +22,30 @@ Route::middleware('auth')->group(function () {
 Route::get("/products", [FrontProductsController::class, 'index'])->name('front.products.index');
 Route::get("/products/grids", [FrontProductsController::class, 'showgrids'])->name('front.products.showgrids');
 Route::get("/products/{product:slug}", [FrontProductsController::class, 'show'])->name('front.products.show');
+
+
+Route::get('/checkout',[CheckoutController::class,'create'])->name('checkout.create');
+Route::post('/checkout',[CheckoutController::class,'store'])->name('checkout.store');
+
+Route::resource("/cart", CartController::class)->only(['index', 'store', 'update', 'destroy']);
+
+
+
+Route::get("/about-us",function() {
+    return view("aboutUs");
+})->name("about_us");
+Route::get("/contact",function() {
+    return view("contact");
+})->name('contact');
+Route::get("/faq",function() {
+    return view("FAQ");
+})->name("FAQ");
+Route::get("/login",function() {
+    return view("front.login");
+})->name('front.login');
+Route::get("/register",function() {
+    return view("Register");
+})->name('front.register');
 
 require __DIR__ . '/dashboard.php';
 require __DIR__ . '/auth.php';
