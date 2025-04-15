@@ -20,7 +20,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         // $name = $this->faker->unique()->words(2, true);
-        $name = $this->faker->company() . " " . $this->faker->word();
+        $name = $this->faker->unique()->words(2, true);
 
         return [
             'name' => $name,

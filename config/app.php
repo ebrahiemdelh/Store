@@ -67,7 +67,7 @@ return [
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
     'currency'=>'USD',
-
+    'app_token'=>env('APP_TOKEN'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

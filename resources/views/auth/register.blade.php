@@ -66,14 +66,14 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="password-confirm">Confirm Password</label>
-                                    <input class="form-control" type="password" name="password-confirm" required>
+                                    <label for="password_confirmation">Confirm Password</label>
+                                    <input class="form-control" type="password" name="password_confirmation" required>
                                 </div>
                             </div>
                             <div class="button">
                                 <button class="btn" type="submit">Register</button>
                             </div>
-                            <p class="outer-link">Already have an account? <a href="login.html">Login Now</a>
+                            <p class="outer-link">Already have an account? <a href="{{route('login')}}">Login Now</a>
                             </p>
                         </form>
                     </div>

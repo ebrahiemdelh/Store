@@ -34,9 +34,11 @@
                 <li><span>4.0 Review(s)</span></li>
             </ul>
             <div class="price">
-                <span>{{ Currency::format($product->price, 'eur') }}</span>
                 @if ($product->compare_price)
-                    <span class="discount-price">{{ Currency::format($product->compare_price, 'eur') }}</span>
+                    <span>{{ Currency::format($product->compare_price, 'eur') }}</span>
+                    <span class="discount-price">{{ Currency::format($product->price, 'eur') }}</span>
+                @else
+                    <span>{{ Currency::format($product->price, 'eur') }}</span>
                 @endif
             </div>
         </div>

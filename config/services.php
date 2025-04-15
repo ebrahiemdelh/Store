@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    "currency_converter" => [
+        'api_key' => env('CURRENCY_API_KEY'),
+        // 'base_url' => env('CURRENCY_CONVERTER_BASE_URL', 'https://v6.exchangerate-api.com/v6/'),
+    ],
+
 ];
