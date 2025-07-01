@@ -41,11 +41,12 @@ Route::get("/faq", function () {
     return view("FAQ");
 })->name("FAQ");
 Route::get("/login", function () {
-    return view("front.login");
+    return view("auth.login");
 })->name('front.login');
 Route::get("/register", function () {
-    return view("Register");
+    return view("auth.register");
 })->name('front.register');
+Route::post('currency', [\App\Http\Controllers\Front\CurrencyConverterController::class, 'store'])->name('currency.store');
 
 require __DIR__ . '/dashboard.php';
 require __DIR__ . '/auth.php';

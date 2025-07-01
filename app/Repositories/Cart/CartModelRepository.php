@@ -42,19 +42,19 @@ class CartModelRepository implements CartRepository
     }
     public function update($id, $quantity)
     {
-        return Cart::where('id', $id)
+        Cart::where('id', $id)
             ->update([
                 'quantity' => $quantity
             ]);
     }
     public function delete($id)
     {
-        return Cart::where('product_id', $id)
+        Cart::where('product_id', $id)
             ->delete();
     }
     public function empty()
     {
-        return Cart::query()->delete();
+        Cart::query()->delete();
     }
     public function total(): float
     {

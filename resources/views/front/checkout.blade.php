@@ -78,7 +78,7 @@
                                                 <div class="single-form form-default">
                                                     <label for="addr[billing][country]">Country</label>
                                                     <select name="addr[billing][country]" class="form-control">
-                                                        <option value="">Select Country</option>
+                                                        <option value="" selected disabled>Select Country</option>
                                                         @foreach ($countries as $code => $country)
                                                             <option value="{{ $code }}">{{ $country }}
                                                             </option>
@@ -292,7 +292,7 @@
                             <div class="sub-total-price">
                                 <div class="total-price">
                                     <p class="value">Subotal Price:</p>
-                                    <p class="price">{{ Currency::format($cart->total()) }}</p>
+                                    <p class="price">{{Currency::format($cart->total()) }}</p>
                                 </div>
                                 <div class="total-price shipping">
                                     <p class="value">Subotal Price:</p>
@@ -307,7 +307,7 @@
                             <div class="total-payable">
                                 <div class="payable-price">
                                     <p class="value">Subotal Price:</p>
-                                    <p class="price">{{ Currency::format($cart->total()) }}</p>
+                                    <p class="price">{{Currency::format($cart->total()) }}</p>
                                 </div>
                             </div>
                             <div class="price-table-btn button">

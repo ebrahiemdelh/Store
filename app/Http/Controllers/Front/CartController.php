@@ -13,6 +13,7 @@ use Symfony\Component\Intl\Countries;
 
 class CartController extends Controller
 {
+    protected $cart;
     public function __construct(CartRepository $cart)
     {
         $this->cart = $cart;

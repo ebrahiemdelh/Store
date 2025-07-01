@@ -63,9 +63,9 @@
                                 {{-- :<a href="javascript:void(0)">Action
                                     cameras</a> --}}
                             </p>
-                            <h3 class="price">{{ Currency::format($product->price) }}
+                            <h3 class="price">{{Currency::format($product->price) }}
                                 @if ($product->compare_price)
-                                    <span>{{ Currency::format($product->compare_price) }}</span>
+                                    <span>{{Currency::format($product->compare_price) }}</span>
                                 @endif
                             </h3>
                             <p class="info-text">{{ $product->description }}</p>
