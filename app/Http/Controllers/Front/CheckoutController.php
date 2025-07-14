@@ -55,12 +55,11 @@ class CheckoutController extends Controller
                 }
             }
             DB::commit();
-            // $order = Order::with('products')->find($order->id);
             event(new OrderCreated($order));
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect()->route('home')->with('success', "Checkout made Successfully");
+        // return redirect()->route('home')->with('success', "Checkout made Successfully");
     }
 }

@@ -28,7 +28,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail','database'];
         // $channels=['database'];
         // if($notifiable->notification_preferences['order_created']['sms'] ?? false) {
         //     $channels[]='vonage';
@@ -54,7 +54,9 @@ class OrderCreatedNotification extends Notification
             ->line("A new order #({$this->order->number}) created by {$addr->name} from {$addr->country_name}.")
             ->action('View order', url('/dashboard'))
             ->line('Thank you for Buying From Our Site!');
-            
+            // to user email and username other than the default in .env file 
+            //->from("email@email.com","username")
+
     }
 
     /**

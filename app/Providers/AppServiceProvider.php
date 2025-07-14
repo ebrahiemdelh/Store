@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\OrderCreated;
 use App\Listeners\DeductProductQuantity;
 use App\Listeners\EmptyCart;
+use App\Listeners\SendOrderCreatedNotification;
 use App\Services\CurrencyConverter;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         Event::listen(SendEmailVerificationNotification::class);
         Event::listen(OrderCreated::class, DeductProductQuantity::class);
-        Event::listen(OrderCreated::class, EmptyCart::class);
+        Event::listen(OrderCreated::class, SendOrderCreatedNotification::class);
+        // Event::listen(OrderCreated::class, EmptyCart::class);
     }
 }

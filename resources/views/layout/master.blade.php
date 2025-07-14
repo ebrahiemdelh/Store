@@ -15,9 +15,11 @@
     {{-- @include('layout.sidebar') --}}
     <x-nav />
     @yield('content')
+    @flasher
     @section('breadcrumb')
         @include('layout.footer')
         @stack('scripts')
+        @flasherScripts
     </body>
 
     </html>

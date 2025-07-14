@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Services\CurrencyConverter;
+use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -32,7 +33,7 @@ class CurrencyConverterController extends Controller
             Cache::put($cacheKey, $rate, now()->addMinutes(60));
         }
         Session::put('currency_code', $currency_code);
-        toastr()->success('Currency changed successfully.');
+        flash()->success('Currency changed successfully.');
         return redirect()->back();
     }
 }

@@ -36,13 +36,15 @@ class CartController extends Controller
         ]);
         $product = Product::find($request->post('product_id'));
         $this->cart->add($product, $request->post('quantity'));
+        session()->flash('message', 'Product Added Successfully');
+        // session()->flash('type', 'success');
         return redirect()->route('cart.index')->with('success', 'Product added to cart');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'quantity' => 'required | integer | min:1'
@@ -57,7 +59,7 @@ class CartController extends Controller
     {
         $this->cart->delete($id);
         return [
-            'message'=>'Product removed from cart'
+            'message' => 'Product removed from cart'
         ];
     }
 }
