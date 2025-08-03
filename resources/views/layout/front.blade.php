@@ -75,11 +75,20 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            @if (Auth::check())
-                                <a class="user" href="{{ route('dashboard.home') }}">
+                            @auth
+                                <a class="user" href="{{ 
+                                Config::get('fortify.gaurd')=='admin' ? route('dashboard.dash'): route('dash') }}">
                                     <i class="lni lni-user"></i>
                                     {{ Auth::user()->name }}
                                 </a>
+                                <ul class="user-login">
+                                    <li style="border-right:none;">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout').submit();">Logout</a>
+                                    </li>
+                                    <form id="logout" action="{{ route('logout') }}" method="post" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </ul>
                             @else
                                 <div class="user">
                                     <i class="lni lni-user"></i>

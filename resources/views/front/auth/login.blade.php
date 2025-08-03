@@ -1,5 +1,5 @@
 <x-front-layout>
-    <x-slot:title>Admin Login</x-slot:title>
+    <x-slot:title>User Login</x-slot:title>
     <x-slot:breadcrumbs>
         <div class="breadcrumbs">
             <div class="container">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/', [HomeController::class, 'index'])->name('home'); //
+Route::get('/dashboard', function () {
+    return view('dashboard'); // This is the dashboard view
+})->name('dash'); // 'verified' if for email verification
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -40,14 +44,15 @@ Route::get("/contact", function () {
 Route::get("/faq", function () {
     return view("FAQ");
 })->name("FAQ");
-Route::get("/login", function () {
-    return view("auth.login");
-})->name('front.login');
-Route::get("/register", function () {
-    return view("auth.register");
-})->name('front.register');
+// Route::get("/login", function () {
+//     return view("auth.login");
+// })->name('front.login');
+// Route::get("/register", function () {
+//     return view("auth.register");
+// })->name('front.register');
 Route::post('currency', [\App\Http\Controllers\Front\CurrencyConverterController::class, 'store'])->name('currency.store');
+Route::get('/auth/user/2fa', [TwoFactorAuthenticationController::class, 'index'])->name('2fa.index');
 
 require __DIR__ . '/dashboard.php';
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 require __DIR__ . '/api.php';

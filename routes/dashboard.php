@@ -9,11 +9,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group([
-    'middleware' => ['auth',"auth.type:admin,super-admin"],
-    'prefix' => 'dashboard',
-    'as' => 'dashboard.'  //used to make the name used in route dashboard.category.create for example
+    'middleware' => [
+        'auth:admin',
+        // "auth.type:admin,super-admin",
+    ],
+    'as' => 'dashboard.',  //used to make the name used in route dashboard.category.create for example
+    'prefix' => 'admin/dashboard',
 ], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home'); // 'verified' if for email verification
+    Route::get('/dashboard', function() {
+        return view('dashboard'); // This is the dashboard view
+    })->name('dash'); // 'verified' if for email verification
 
     Route::get('/profile/edit', [DashProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [DashProfileController::class, 'update'])->name('profile.update');
