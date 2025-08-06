@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CheckApiToken;
 use App\Http\Middleware\CheckUserType;
+use App\Http\Middleware\SetAppLocale;
 use App\Http\Middleware\UpdateLastActiveAt;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('web', [
             UpdateLastActiveAt::class,
+            SetAppLocale::class,
         ]);
         $middleware->prependToGroup('api', [
             CheckApiToken::class,

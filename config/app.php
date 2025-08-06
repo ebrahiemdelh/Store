@@ -66,8 +66,8 @@ return [
     */
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
-    'currency'=>'USD',
-    'app_token'=>env('APP_TOKEN'),
+    'currency' => 'USD',
+    'app_token' => env('APP_TOKEN'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -84,6 +84,24 @@ return [
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
+    'available_locales' => [
+        'English' => 'en',
+        'Spanish' => 'es',
+        'French' => 'fr',
+        'German' => 'de',
+        'Arabic' => 'ar',
+        'Japanese' => 'jp',
+        'Portuguese' => 'pt',
+        // 'Russian' => 'ru',
+        // 'Chinese' => 'zh',
+        // 'Hindi' => 'hi',
+        // 'Italian' => 'it',
+        // 'Dutch' => 'nl',
+        // 'Korean' => 'ko',
+        // 'Turkish' => 'tr',
+        // 'Swedish' => 'sv',
+    ],
 
     /*
     |--------------------------------------------------------------------------
