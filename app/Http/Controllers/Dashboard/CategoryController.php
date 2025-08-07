@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('categories.view');
+
         $categories = Category::with('parent')
             ->withCount([
                 'products' => function ($query) {
@@ -36,6 +39,13 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('categories.create');
+        // if (Gate::denies('categories.create')) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+        // if (Gate::allows('categories.create')) {
+        //     // The current user can create categories...
+        // }
         $parents = Category::all();
         return view('dashboard.categories.create', compact('parents'));
     }
@@ -45,6 +55,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('categories.create');
         $request->validate([
             'name' => 'required|string| unique:categories| not_in:admin,administrator',
             'parent_id' => 'int| exists:categories,id',
@@ -68,6 +79,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        Gate::authorize('categories.view');
         return view('dashboard.categories.show', compact('category'));
     }
 
@@ -76,8 +88,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('categories.update');
+
         $category = Category::find($id);
-        if ($category == null) return redirect()->route('categories.index')->with('info', 'Record not Found');
+        if ($category == null) return redirect()->route('dashboard.categories.index')->with('info', 'Record not Found');
         $parents = Category::where('id', '<>', $id)->get();
         return view('dashboard.categories.edit', compact('category', 'parents'));
     }
@@ -87,6 +101,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Gate::authorize('categories.update');
+
         $request->validate([
             'name' => 'required|string| unique:categories| not_in:admin,administrator',
             'parent_id' => 'int| exists:categories,id',
@@ -106,7 +122,7 @@ class CategoryController extends Controller
             Storage::disk('public')->delete($oldImage);
         }
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -114,22 +130,26 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('categories.delete');
+
         $category = Category::destroy($id);
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', 'Category deleted successfully');
     }
     public function trash()
     {
+        Gate::authorize('categories.delete');
+
         $categories = Category::onlyTrashed()->paginate();
         return view('dashboard.categories.index', compact('categories'));
     }
     public function restore($id)
     {
         $categories = Category::where('id', $id)->restore();
-        return redirect()->route('categories.trash')->with('success', 'Category restored successfully');
+        return redirect()->route('dashboard.categories.trash')->with('success', 'Category restored successfully');
     }
     public function forceDelete($id)
     {
         $categories = Category::where('id', $id)->forceDelete();
-        return redirect()->route('categories.trash')->with('danger', 'Category Deleted Successfully');
+        return redirect()->route('dashboard.categories.trash')->with('danger', 'Category Deleted Successfully');
     }
 }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
             return new CurrencyConverter(
                 config('services.currency_converter.api_key'),
             );
+        });
+        $this->app->bind('abilities',function() {
+            return include base_path('data/abilities.php');
         });
     }
 
@@ -43,5 +47,12 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(OrderCreated::class, DeductProductQuantity::class);
         Event::listen(OrderCreated::class, SendOrderCreatedNotification::class);
         // Event::listen(OrderCreated::class, EmptyCart::class);
+
+        $abilities = include base_path('data/abilities.php');
+        foreach ($abilities as $ability_code => $ability_name) {
+            Gate::define("{$ability_code}", function ($user) use ($ability_code) {
+                return $user->hasAbility($ability_code);
+            });
+        }
     }
 }

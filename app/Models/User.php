@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +15,11 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 // class User extends Authenticatable implements MustVerifyEmail // if you want to verify email address
 {
-    use HasFactory, Notifiable, HasApiTokens, TwoFactorAuthenticatable;
+    use HasFactory,
+        Notifiable,
+        HasApiTokens,
+        TwoFactorAuthenticatable,
+        HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +54,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function profile() {
-        return $this->hasOne(Profile::class,'user_id', 'id')->withDefault();
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id')->withDefault();
     }
 }

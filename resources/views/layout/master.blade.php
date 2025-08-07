@@ -17,9 +17,9 @@
     @yield('content')
     @flasher
     @section('breadcrumb')
-        @include('layout.footer')
-        @stack('scripts')
-        @flasherScripts
-    </body>
+    @include('layout.footer')
+    @stack('scripts')
+    @flasherScripts
+</body>
 
-    </html>
+</html>

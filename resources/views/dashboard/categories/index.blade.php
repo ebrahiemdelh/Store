@@ -44,14 +44,15 @@
                                     value="{{ request('name') }}">
                                 <select name="status" class="form-control mx-4">
                                     <option value="" selected>All</option>
-                                    <option value="active"@selected(request('status') == 'active')>Active</option>
-                                    <option value="archived"@selected(request('status') == 'archived')>Archived</option>
+                                    <option value="active" @selected(request('status') == 'active')>Active</option>
+                                    <option value="archived" @selected(request('status') == 'archived')>Archived</option>
                                 </select>
-                                <button type='submit'class="btn btn-dark mx-2">Filter</button>
+                                <button type='submit' class="btn btn-dark mx-2">Filter</button>
                             </form>
                             <div class="card-header">
                                 <h3 class="card-title">Responsive Hover Table</h3>
                                 @if (Route::currentRouteName() == 'dashboard.categories.index')
+                                @can('categories.create')
                                     <div class="card-tools mx-2">
                                         <div class="input-group input-group-sm" style="width: 150px;">
                                             <a class="btn btn-sm btn-primary"
@@ -60,14 +61,17 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="card-tools mx-2">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <a class="btn btn-sm btn-primary"
-                                                href="{{ route('dashboard.categories.trash') }}">
-                                                Trash Categories
-                                            </a>
-                                        </div>
+                                @endcan
+                                @can('categories.delete')                                    
+                                <div class="card-tools mx-2">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <a class="btn btn-sm btn-primary"
+                                        href="{{ route('dashboard.categories.trash') }}">
+                                        Trash Categories
+                                        </a>
                                     </div>
+                                </div>
+                                @endcan
                                 @endif
                                 @if (Route::currentRouteName() == 'dashboard.categories.trash')
                                     <div class="card-tools mx-2">
@@ -114,8 +118,10 @@
                                                 <td>{{ $category->status }}</td>
                                                 {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                                                 <td class="d-flex justify-content-around">
+                                                    @can('categories.update')
                                                     <a href="{{ route('dashboard.categories.edit', $category->id) }}"
                                                         class="btn btn-sm btn-outline-success">Edit</a>
+                                                    @endcan
                                                     @if ($category->deleted_at != null)
                                                         <form
                                                             action="{{ route('dashboard.categories.restore', $category->id) }}"
@@ -125,17 +131,14 @@
                                                             <button type="submit"
                                                                 class="btn btn-sm btn-outline-primary">Restore</button>
                                                         </form>
-                                                        <form
-                                                            action="{{ route('dashboard.categories.force-delete', $category->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-outline-danger">Force
-                                                                Delete</button>
-                                                        </form>
-                                                        </form>
+                                                        @can('categories.delete')
+                                                            <form action="{{ route('dashboard.categories.force-delete', $category->id) }}" method="post">
+                                                            @csrf @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger">Force Delete</button>
+                                                            </form>
+                                                        @endcan
                                                     @else
+                                                        @can('categories.delete')
                                                         <form
                                                             action="{{ route('dashboard.categories.destroy', $category->id) }}"
                                                             method="POST">
@@ -144,10 +147,11 @@
                                                             <button type="submit"
                                                                 class="btn btn-sm btn-outline-danger">Delete</button>
                                                         </form>
+                                                        @endcan
                                                     @endif
                                                 </td>
                                             </tr>
-                                        @empty
+                                            @empty
                                             <tr class="text-center">
                                                 <td colspan="9">No Categories Found</td>
                                             </tr>

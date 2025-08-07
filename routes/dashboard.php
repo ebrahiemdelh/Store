@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProfileController as DashProfileController;
+use App\Http\Controllers\Dashboard\RolesController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,9 @@ Route::group([
     Route::put('/products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
     Route::delete('/products/{product}/force-delete', [ProductController::class, 'forceDelete'])->name('products.force-delete');
     // Resource Controllers
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/products', ProductController::class);
+    Route::resources([
+        '/categories' => CategoryController::class,
+        '/products' => ProductController::class,
+        '/roles' => RolesController::class,
+    ]);
 });
