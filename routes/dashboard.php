@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ProfileController as DashProfileController;
 use App\Http\Controllers\Dashboard\RolesController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Middleware\CheckUserType;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,7 @@ Route::group([
     'prefix' => 'admin/dashboard',
 ], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home'); // 'verified' if for email verification
-    Route::get('/dashboard', function() {
+    Route::get('/dashboard', function () {
         return view('dashboard'); // This is the dashboard view
     })->name('dash'); // 'verified' if for email verification
 
@@ -38,5 +40,7 @@ Route::group([
         '/categories' => CategoryController::class,
         '/products' => ProductController::class,
         '/roles' => RolesController::class,
+        '/admins' => AdminController::class,
+        '/users' => UserController::class,
     ]);
 });

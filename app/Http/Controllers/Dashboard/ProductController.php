@@ -11,13 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Product::class);
         $products = Product::filter($request->query())->with(['category', 'store'])->paginate(10);
         return view('dashboard.products.index', compact('products'));
     }
@@ -27,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Product::class);
     }
 
     /**
@@ -35,7 +39,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Product::class);
     }
 
     /**
@@ -43,7 +47,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('view', $product);
     }
 
     /**
@@ -52,6 +57,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
+        $this->authorize('update', $product);
         $categories = Category::all();
         // $stores = Auth::user()->stores;
         $tags = implode(",", $product->tags->pluck('name')->toArray());
@@ -65,6 +71,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
 
     {
+        $this->authorize('update', $product);
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
@@ -107,6 +114,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $this->authorize('delete', $product);
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
 }

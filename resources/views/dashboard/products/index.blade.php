@@ -1,8 +1,8 @@
 @extends('layout.master')
 @if (Route::currentRouteName() == 'dashboard.products.trash')
-    @section('title', 'Trash Products')
+@section('title', 'Trash Products')
 @elseif (Route::currentRouteName() == 'dashboard.products.index')
-    @section('title', 'Products')
+@section('title', 'Products')
 @endif('title', 'Products')
 @section('content')
     <div class="content-wrapper">
@@ -40,19 +40,19 @@
                         <div class="card">
                             <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between my-4">
                                 @csrf
-                                <x-form.input name="name" placeholder="Search With Name" class="mx-4"
+                                <input type="text" name="name" placeholder="Search With Name" class="mx-2"
                                     value="{{ request('name') }}" />
-                                <x-form.input name="store" placeholder="Search With Store Id" class="mx-4"
+                                <input type="text" name="store" placeholder="Search With Store Id" class="mx-2"
                                     value="{{ request('store') }}" />
-                                <x-form.input name="category" placeholder="Search With Category Id" class="mx-4"
+                                <input type="text" name="category" placeholder="Search With Category Id" class="mx-2"
                                     value="{{ request('category') }}" />
                                 <select name="status" class="form-control mx-4">
                                     <option value="" selected>All</option>
-                                    <option value="active"@selected(request('status') == 'active')>Active</option>
-                                    <option value="archived"@selected(request('status') == 'archived')>Archived</option>
-                                    <option value="draft"@selected(request('status') == 'draft')>Draft</option>
+                                    <option value="active" @selected(request('status') == 'active')>Active</option>
+                                    <option value="archived" @selected(request('status') == 'archived')>Archived</option>
+                                    <option value="draft" @selected(request('status') == 'draft')>Draft</option>
                                 </select>
-                                <button type='submit'class="btn btn-dark mx-2">Filter</button>
+                                <button type='submit' class="btn btn-dark mx-2">Filter</button>
                             </form>
                             <div class="card-header">
                                 <h3 class="card-title">Responsive Hover Table</h3>
@@ -116,8 +116,8 @@
                                                         <form action="{{ route('dashboard.products.force-delete', $product->id) }}"
                                                             method="post">
                                                             @csrf @method('delete')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btm-outline-danger">Force Delete</button>
+                                                            <button type="submit" class="btn btn-sm btm-outline-danger">Force
+                                                                Delete</button>
                                                         </form>
                                                     @endif
                                                 </td>

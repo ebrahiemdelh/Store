@@ -24,6 +24,8 @@ return [
     'roles.create' => __('Create Roles'),
     'roles.update' => __('Update Roles'),
     'roles.delete' => __('Delete Roles'),
+    'roles.restore' => __('Restore Roles'),
+    'roles.force-delete' => __('Force Delete Roles'),
 
     'settings.view' => __('View Settings'),
     'settings.update' => __('Update Settings'),

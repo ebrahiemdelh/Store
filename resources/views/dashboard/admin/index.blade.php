@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Roles')
+@section('title', 'Admins')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -12,12 +12,12 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Roles</li>
                         </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
+
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -30,19 +30,33 @@
                                 @csrf
                                 <input type="text" name="name" placeholder="Search" class="mx-4"
                                     value="{{ request('name') }}">
+                                <select name="status" class="form-control mx-4">
+                                    <option value="" selected>All</option>
+                                    <option value="active" @selected(request('status') == 'active')>Active</option>
+                                    <option value="archived" @selected(request('status') == 'archived')>Archived</option>
+                                </select>
                                 <button type='submit' class="btn btn-dark mx-2">Filter</button>
                             </form>
                             <div class="card-header">
                                 <h3 class="card-title">Responsive Hover Table</h3>
-                                @can('create', App\Models\Role::class)
+                                @can('create', App\Models\Admin::class)
+                                    <div class="card-tools mx-2">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <a class="btn btn-sm btn-primary" href="{{ route('dashboard.admins.create') }}">
+                                                Add Admin
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endcan
+                                {{-- @can('delete',$admin)
                                 <div class="card-tools mx-2">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <a class="btn btn-sm btn-primary" href="{{ route('dashboard.roles.create') }}">
-                                            Add role
+                                        <a class="btn btn-sm btn-primary" href="{{ route('dashboard.admins.trash') }}">
+                                            Trash Admins
                                         </a>
                                     </div>
                                 </div>
-                                @endcan
+                                @endcan --}}
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
@@ -52,41 +66,32 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Created At</th>
-                                            <th colspan="2">Actions</th>
+                                            <th colspan="4">Roles</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($roles as $role)
+                                        @forelse ($admins as $admin)
                                             <tr class="text-center">
-                                                <td>{{ $role->id }}</td>
-                                                <td><a href="{{ route('dashboard.roles.show', $role->id) }}">
-                                                        {{ $role->name }}
-                                                    </a></td>
-                                                <td>{{ $role->created_at }}</td>
-                                                <td class="d-flex justify-content-around">
-                                                    @can('update', $role)
-                                                    <a href="{{ route('dashboard.roles.edit', $role->id) }}"
-                                                        class="btn btn-sm btn-outline-success">Edit</a>
-                                                    @endcan
-                                                    @can('delete', $role)
-                                                    <form action="{{ route('dashboard.roles.destroy', $role->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="btn btn-sm btn-outline-danger">Delete</button>
-                                                    </form>
-                                                    @endcan
+                                                <td>{{ $admin->id }}</td>
+                                                <td><a
+                                                        href="{{ route('dashboard.admins.show', $admin->id) }}">{{ $admin->name }}</a>
                                                 </td>
+                                                <td>{{ $admin->created_at }}</td>
+                                                <td colspan="4">
+                                                    @foreach ($admin->roles as $role)
+                                                        <span class="badge badge-info">{{ $role->name }}</span>
+                                                    @endforeach
+                                                </td>
+
                                             </tr>
                                         @empty
                                             <tr class="text-center">
-                                                <td colspan="4">No Roles Found</td>
+                                                <td colspan="9">No Admins Found</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
-                                {{ $roles->withQueryString()->links() }}
+                                {{ $admins->withQueryString()->links() }}
 
                             </div>
                             <!-- /.card-body -->

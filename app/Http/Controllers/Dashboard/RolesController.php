@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
-use App\Models\RoleAbility;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Role::class);
+    // }
     public function index()
     {
         $roles = Role::paginate();
@@ -48,7 +53,8 @@ class RolesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = Role::with('abilities')->findOrFail($id);
+        return view('dashboard.roles.show', compact('role'));
     }
 
     /**

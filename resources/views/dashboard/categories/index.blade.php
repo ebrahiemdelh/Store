@@ -52,7 +52,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Responsive Hover Table</h3>
                                 @if (Route::currentRouteName() == 'dashboard.categories.index')
-                                @can('categories.create')
+                                @can('create', App\Models\Category::class)
                                     <div class="card-tools mx-2">
                                         <div class="input-group input-group-sm" style="width: 150px;">
                                             <a class="btn btn-sm btn-primary"
@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                 @endcan
-                                @can('categories.delete')                                    
+                                @can('delete', App\Models\Category::class)
                                 <div class="card-tools mx-2">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <a class="btn btn-sm btn-primary"
@@ -118,7 +118,7 @@
                                                 <td>{{ $category->status }}</td>
                                                 {{-- <td><span class="tag tag-success">Approved</span></td> --}}
                                                 <td class="d-flex justify-content-around">
-                                                    @can('categories.update')
+                                                    @can('update', $category)
                                                     <a href="{{ route('dashboard.categories.edit', $category->id) }}"
                                                         class="btn btn-sm btn-outline-success">Edit</a>
                                                     @endcan
@@ -131,14 +131,14 @@
                                                             <button type="submit"
                                                                 class="btn btn-sm btn-outline-primary">Restore</button>
                                                         </form>
-                                                        @can('categories.delete')
+                                                        @can('delete', $category)
                                                             <form action="{{ route('dashboard.categories.force-delete', $category->id) }}" method="post">
                                                             @csrf @method('DELETE')
                                                             <button type="submit" class="btn btn-sm btn-outline-danger">Force Delete</button>
                                                             </form>
                                                         @endcan
                                                     @else
-                                                        @can('categories.delete')
+                                                        @can('delete', $category)
                                                         <form
                                                             action="{{ route('dashboard.categories.destroy', $category->id) }}"
                                                             method="POST">

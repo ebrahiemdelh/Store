@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
                 config('services.currency_converter.api_key'),
             );
         });
-        $this->app->bind('abilities',function() {
+        $this->app->bind('abilities', function () {
             return include base_path('data/abilities.php');
         });
     }
@@ -48,8 +48,13 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(OrderCreated::class, SendOrderCreatedNotification::class);
         // Event::listen(OrderCreated::class, EmptyCart::class);
 
-        $abilities = include base_path('data/abilities.php');
-        foreach ($abilities as $ability_code => $ability_name) {
+        Gate::before(function ($user, $ability) {
+            if ($user->super_admin) {
+                return true;
+            }
+        });
+
+        foreach ($this->app->make('abilities') as $ability_code => $ability_name) {
             Gate::define("{$ability_code}", function ($user) use ($ability_code) {
                 return $user->hasAbility($ability_code);
             });
